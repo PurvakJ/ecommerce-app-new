@@ -1146,6 +1146,78 @@
             color: var(--primary);
         }
 
+        /* Size Checkbox Styles for Admin */
+        .size-checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 10px;
+            padding: 10px;
+            background: var(--light);
+            border-radius: var(--radius);
+        }
+
+        .size-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 8px 12px;
+            background: white;
+            border: 1px solid var(--gray-light);
+            border-radius: var(--radius-full);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .size-checkbox:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .size-checkbox input[type="checkbox"] {
+            width: auto;
+            margin-right: 5px;
+            cursor: pointer;
+        }
+
+        .size-checkbox input[type="checkbox"]:checked + span {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* Selected Sizes Display */
+        .selected-sizes {
+            margin: 10px 0;
+            padding: 10px;
+            background: var(--light);
+            border-radius: var(--radius);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .size-tag {
+            background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
+            color: white;
+            padding: 4px 12px;
+            border-radius: var(--radius-full);
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .size-tag i {
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.2s ease;
+        }
+
+        .size-tag i:hover {
+            opacity: 1;
+        }
+
         /* Responsive Styles */
         @media (max-width: 992px) {
             .hero h1 {
@@ -1998,29 +2070,42 @@
                         <textarea id="pdesc" placeholder="Enter product description..." class="form-control" rows="4"></textarea>
                     </div>
                     
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label><i class="fas fa-image"></i> Image URL</label>
-                            <input type="text" id="pimageUrl" placeholder="https://example.com/image.jpg" class="form-control">
+                    <div class="form-group">
+                        <label><i class="fas fa-image"></i> Image URL</label>
+                        <input type="text" id="pimageUrl" placeholder="https://example.com/image.jpg" class="form-control">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label><i class="fas fa-tshirt"></i> Available Sizes *</label>
+                        <p class="section-desc" style="margin: 5px 0 10px; font-size: 0.85rem;">Select all sizes that are available for this product</p>
+                        <div class="size-checkbox-group" id="sizeCheckboxGroup">
+                            <label class="size-checkbox">
+                                <input type="checkbox" value="XS"> XS
+                            </label>
+                            <label class="size-checkbox">
+                                <input type="checkbox" value="S"> S
+                            </label>
+                            <label class="size-checkbox">
+                                <input type="checkbox" value="M" checked> M
+                            </label>
+                            <label class="size-checkbox">
+                                <input type="checkbox" value="L"> L
+                            </label>
+                            <label class="size-checkbox">
+                                <input type="checkbox" value="XL"> XL
+                            </label>
+                            <label class="size-checkbox">
+                                <input type="checkbox" value="XXL"> XXL
+                            </label>
                         </div>
-                        <div class="form-group">
-                            <label><i class="fas fa-tshirt"></i> Size</label>
-                            <select id="psize" class="form-control">
-                                <option value="XS">XS</option>
-                                <option value="S">S</option>
-                                <option value="M" selected>M</option>
-                                <option value="L">L</option>
-                                <option value="XL">XL</option>
-                                <option value="XXL">XXL</option>
-                            </select>
+                        <div class="selected-sizes" id="selectedSizesDisplay">
+                            <span class="size-tag">M <i class="fas fa-check-circle"></i></span>
                         </div>
                     </div>
                     
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label><i class="fas fa-folder"></i> Category</label>
-                            <input type="text" id="pcategory" placeholder="e.g., Electronics, Fashion" class="form-control">
-                        </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-folder"></i> Category</label>
+                        <input type="text" id="pcategory" placeholder="e.g., Electronics, Fashion" class="form-control">
                     </div>
                     
                     <div class="image-preview-container" id="imagePreviewContainer" style="display: none;">
@@ -2211,15 +2296,28 @@
                     <input type="text" id="editPimageUrl" placeholder="Image URL" class="form-control">
                 </div>
                 <div class="form-group">
-                    <label>Size</label>
-                    <select id="editPsize" class="form-control">
-                        <option value="XS">XS</option>
-                        <option value="S">S</option>
-                        <option value="M">M</option>
-                        <option value="L">L</option>
-                        <option value="XL">XL</option>
-                        <option value="XXL">XXL</option>
-                    </select>
+                    <label>Available Sizes</label>
+                    <div class="size-checkbox-group" id="editSizeCheckboxGroup">
+                        <label class="size-checkbox">
+                            <input type="checkbox" value="XS"> XS
+                        </label>
+                        <label class="size-checkbox">
+                            <input type="checkbox" value="S"> S
+                        </label>
+                        <label class="size-checkbox">
+                            <input type="checkbox" value="M"> M
+                        </label>
+                        <label class="size-checkbox">
+                            <input type="checkbox" value="L"> L
+                        </label>
+                        <label class="size-checkbox">
+                            <input type="checkbox" value="XL"> XL
+                        </label>
+                        <label class="size-checkbox">
+                            <input type="checkbox" value="XXL"> XXL
+                        </label>
+                    </div>
+                    <div class="selected-sizes" id="editSelectedSizesDisplay"></div>
                 </div>
                 <div class="form-group">
                     <input type="text" id="editPcategory" placeholder="Category" class="form-control">
@@ -2259,13 +2357,13 @@
 
     <footer>
         <p>&copy; 2024 Rarefold. All rights reserved.</p>
-        <p><i class="fas fa-envelope"></i> Rarefold21@gmail.com | <i class="fas fa-phone"></i> +91 9780353569</p>
+        <p><i class="fas fa-envelope"></i> officialtherarefoldin@gmail.com | <i class="fas fa-phone"></i> +91-79863-37325</p>
         <p><i class="fas fa-map-marker-alt"></i> Adalat Bazar, Patiala, 147001</p>
     </footer>
 
     <script>
         // IMPORTANT: Update this with your actual deployed Apps Script URL
-        const API = "https://script.google.com/macros/s/AKfycbwFSGo7Eo5jZh7UXluR5xmW93b37SrA_dJWPIlf-JPMZv1eUH9SyooU2Q6Fs-j1DjxDXg/exec";
+        const API = "https://script.google.com/macros/s/AKfycbzN8YDCD5WNQ3tGgz9rKBQ4dizmQNaAWZUd93NXiNteXEwtGynPnvmNEsfcjGENRb-54w/exec";
         const RAZORPAY_KEY = "rzp_live_SHY8pGfg0b1Sz0";
 
         let user = null;
@@ -2279,7 +2377,85 @@
         document.addEventListener('DOMContentLoaded', function() {
             checkAuth();
             loadProducts();
+            
+            // Add event listeners for size checkboxes
+            const sizeCheckboxes = document.querySelectorAll('#sizeCheckboxGroup input[type="checkbox"]');
+            sizeCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', updateSelectedSizesDisplay);
+            });
         });
+
+        /* ---------- SIZE MANAGEMENT ---------- */
+        function updateSelectedSizesDisplay() {
+            const checkboxes = document.querySelectorAll('#sizeCheckboxGroup input[type="checkbox"]:checked');
+            const displayDiv = document.getElementById('selectedSizesDisplay');
+            
+            if (checkboxes.length === 0) {
+                displayDiv.innerHTML = '<p style="color: var(--danger);">Please select at least one size</p>';
+                return;
+            }
+            
+            let html = '';
+            checkboxes.forEach(checkbox => {
+                html += `<span class="size-tag">${checkbox.value} <i class="fas fa-check-circle"></i></span>`;
+            });
+            displayDiv.innerHTML = html;
+        }
+
+        function updateEditSelectedSizesDisplay() {
+            const checkboxes = document.querySelectorAll('#editSizeCheckboxGroup input[type="checkbox"]:checked');
+            const displayDiv = document.getElementById('editSelectedSizesDisplay');
+            
+            if (checkboxes.length === 0) {
+                displayDiv.innerHTML = '<p style="color: var(--danger);">Please select at least one size</p>';
+                return;
+            }
+            
+            let html = '';
+            checkboxes.forEach(checkbox => {
+                html += `<span class="size-tag">${checkbox.value} <i class="fas fa-check-circle"></i></span>`;
+            });
+            displayDiv.innerHTML = html;
+        }
+
+        function getSelectedSizes() {
+            const checkboxes = document.querySelectorAll('#sizeCheckboxGroup input[type="checkbox"]:checked');
+            const sizes = [];
+            checkboxes.forEach(checkbox => {
+                sizes.push(checkbox.value);
+            });
+            return sizes;
+        }
+
+        function getEditSelectedSizes() {
+            const checkboxes = document.querySelectorAll('#editSizeCheckboxGroup input[type="checkbox"]:checked');
+            const sizes = [];
+            checkboxes.forEach(checkbox => {
+                sizes.push(checkbox.value);
+            });
+            return sizes;
+        }
+
+        function setEditSizes(sizesArray) {
+            // Uncheck all first
+            document.querySelectorAll('#editSizeCheckboxGroup input[type="checkbox"]').forEach(cb => {
+                cb.checked = false;
+            });
+            
+            // Check the ones in the array
+            if (sizesArray && sizesArray.length > 0) {
+                sizesArray.forEach(size => {
+                    const checkbox = document.querySelector(`#editSizeCheckboxGroup input[value="${size}"]`);
+                    if (checkbox) checkbox.checked = true;
+                });
+            } else {
+                // Default to M if no sizes
+                const defaultCheckbox = document.querySelector('#editSizeCheckboxGroup input[value="M"]');
+                if (defaultCheckbox) defaultCheckbox.checked = true;
+            }
+            
+            updateEditSelectedSizesDisplay();
+        }
 
         /* ---------- PAGE NAVIGATION ---------- */
         function showPage(pageId) {
@@ -2457,8 +2633,19 @@
                         document.getElementById('editPprice').value = product[2];
                         document.getElementById('editPdesc').value = product[3] || '';
                         document.getElementById('editPimageUrl').value = product[4] || '';
-                        document.getElementById('editPsize').value = product[5] || 'M';
                         document.getElementById('editPcategory').value = product[6] || '';
+                        
+                        // Parse sizes from JSON string
+                        let sizes = ['M']; // Default
+                        try {
+                            if (product[5]) {
+                                sizes = JSON.parse(product[5]);
+                            }
+                        } catch (e) {
+                            console.error('Error parsing sizes:', e);
+                        }
+                        
+                        setEditSizes(sizes);
                     }
                 }
             }
@@ -2654,15 +2841,35 @@
         }
 
         function createProductCard(product) {
+            // Parse sizes from JSON string
+            let availableSizes = ['M']; // Default
+            try {
+                if (product[5]) {
+                    availableSizes = JSON.parse(product[5]);
+                }
+            } catch (e) {
+                console.error('Error parsing sizes:', e);
+            }
+            
             const productData = {
                 id: product[0],
                 name: product[1],
                 price: product[2],
                 desc: product[3],
                 imageUrl: product[4] || '',
-                size: product[5] || 'M',
+                sizes: availableSizes,
                 category: product[6] || ''
             };
+            
+            // Create size options HTML
+            let sizeOptionsHTML = '';
+            if (productData.sizes && productData.sizes.length > 0) {
+                sizeOptionsHTML = productData.sizes.map(size => 
+                    `<option value="${size}">${size}</option>`
+                ).join('');
+            } else {
+                sizeOptionsHTML = '<option value="M">M</option>';
+            }
             
             return `
                 <div class="product-card">
@@ -2681,12 +2888,7 @@
                         <div class="size-selector">
                             <label for="size-${productData.id}">Select Size:</label>
                             <select id="size-${productData.id}" class="size-input">
-                                <option value="XS">XS</option>
-                                <option value="S">S</option>
-                                <option value="M" selected>M</option>
-                                <option value="L">L</option>
-                                <option value="XL">XL</option>
-                                <option value="XXL">XXL</option>
+                                ${sizeOptionsHTML}
                             </select>
                         </div>
                         
@@ -3215,11 +3417,18 @@
             const price = document.getElementById('pprice').value;
             const desc = document.getElementById('pdesc').value;
             const imageUrl = document.getElementById('pimageUrl').value;
-            const size = document.getElementById('psize').value;
             const category = document.getElementById('pcategory').value;
+            
+            // Get selected sizes
+            const sizes = getSelectedSizes();
 
             if (!name || !price) {
                 showNotification('Please fill in required fields', 'error');
+                return;
+            }
+
+            if (sizes.length === 0) {
+                showNotification('Please select at least one size', 'error');
                 return;
             }
 
@@ -3232,7 +3441,7 @@
                         price: Number(price),
                         description: desc,
                         imageUrl: imageUrl,
-                        size: size || 'M',
+                        sizes: sizes, // Send array of sizes
                         category: category
                     })
                 });
@@ -3245,8 +3454,13 @@
                     document.getElementById('pprice').value = '';
                     document.getElementById('pdesc').value = '';
                     document.getElementById('pimageUrl').value = '';
-                    document.getElementById('psize').value = 'M';
                     document.getElementById('pcategory').value = '';
+                    
+                    // Reset checkboxes to default (only M checked)
+                    document.querySelectorAll('#sizeCheckboxGroup input[type="checkbox"]').forEach(cb => {
+                        cb.checked = cb.value === 'M';
+                    });
+                    updateSelectedSizesDisplay();
                     
                     loadProducts();
                 }
@@ -3261,11 +3475,18 @@
             const price = document.getElementById('editPprice').value;
             const desc = document.getElementById('editPdesc').value;
             const imageUrl = document.getElementById('editPimageUrl').value;
-            const size = document.getElementById('editPsize').value;
             const category = document.getElementById('editPcategory').value;
+            
+            // Get selected sizes
+            const sizes = getEditSelectedSizes();
 
             if (!id || !name || !price) {
                 showNotification('Please fill in required fields', 'error');
+                return;
+            }
+
+            if (sizes.length === 0) {
+                showNotification('Please select at least one size', 'error');
                 return;
             }
 
@@ -3279,7 +3500,7 @@
                         price: Number(price),
                         description: desc,
                         imageUrl: imageUrl,
-                        size: size || 'M',
+                        sizes: sizes, // Send array of sizes
                         category: category
                     })
                 });
@@ -3327,6 +3548,16 @@
             document.getElementById('manageProductCount').textContent = `${allProducts.length} products`;
             
             container.innerHTML = allProducts.map(product => {
+                // Parse sizes for display
+                let sizes = ['M'];
+                try {
+                    if (product[5]) {
+                        sizes = JSON.parse(product[5]);
+                    }
+                } catch (e) {
+                    console.error('Error parsing sizes:', e);
+                }
+                
                 const productImage = product[4] ? 
                     `<img src="${product[4]}" alt="${product[1]}" style="width: 60px; height: 60px; object-fit: cover; border-radius: var(--radius);" onerror="this.style.display='none'">` :
                     '<i class="fas fa-box" style="font-size: 2rem; color: var(--gray);"></i>';
@@ -3337,7 +3568,7 @@
                             ${productImage}
                             <div class="admin-product-info">
                                 <h4>${product[1]}</h4>
-                                <span class="product-category-badge">${product[5] || 'Default Size'} | ${product[6] || 'Uncategorized'}</span>
+                                <span class="product-category-badge">Sizes: ${sizes.join(', ')} | ${product[6] || 'Uncategorized'}</span>
                                 <div class="product-price">₹${product[2]}</div>
                                 <div class="product-desc-preview">${(product[3] || 'No description').substring(0, 100)}${(product[3] || '').length > 100 ? '...' : ''}</div>
                             </div>
@@ -3535,6 +3766,16 @@
             }
             
             container.innerHTML = filteredProducts.map(product => {
+                // Parse sizes for display
+                let sizes = ['M'];
+                try {
+                    if (product[5]) {
+                        sizes = JSON.parse(product[5]);
+                    }
+                } catch (e) {
+                    console.error('Error parsing sizes:', e);
+                }
+                
                 return `
                     <div class="product-card">
                         <div class="product-img" style="${product[4] ? `background-image: url('${product[4]}')` : ''}">
@@ -3545,7 +3786,7 @@
                             <h3 class="product-name">${product[1]}</h3>
                             <p class="product-desc">${product[3] || 'No description available'}</p>
                             <div class="product-price">₹${product[2]}</div>
-                            <div class="size-badge" style="margin: 10px 0;">Default Size: ${product[5] || 'M'}</div>
+                            <div class="size-badge" style="margin: 10px 0;">Available Sizes: ${sizes.join(', ')}</div>
                             <div style="display: flex; gap: 10px; margin-top: 1rem;">
                                 <button class="btn btn-success" onclick="toggleEditModal('${product[0]}')" style="flex: 1;">
                                     <i class="fas fa-edit"></i> Edit
@@ -3603,6 +3844,16 @@
             }
             
             container.innerHTML = filtered.map(product => {
+                // Parse sizes for display
+                let sizes = ['M'];
+                try {
+                    if (product[5]) {
+                        sizes = JSON.parse(product[5]);
+                    }
+                } catch (e) {
+                    console.error('Error parsing sizes:', e);
+                }
+                
                 return `
                     <div class="product-card">
                         <div class="product-img" style="${product[4] ? `background-image: url('${product[4]}')` : ''}">
@@ -3613,7 +3864,7 @@
                             <h3 class="product-name">${product[1]}</h3>
                             <p class="product-desc">${product[3] || 'No description available'}</p>
                             <div class="product-price">₹${product[2]}</div>
-                            <div class="size-badge" style="margin: 10px 0;">Default Size: ${product[5] || 'M'}</div>
+                            <div class="size-badge" style="margin: 10px 0;">Available Sizes: ${sizes.join(', ')}</div>
                             <div style="display: flex; gap: 10px; margin-top: 1rem;">
                                 <button class="btn btn-success" onclick="toggleEditModal('${product[0]}')" style="flex: 1;">
                                     <i class="fas fa-edit"></i> Edit
@@ -3654,6 +3905,16 @@
             }
             
             container.innerHTML = filtered.map(product => {
+                // Parse sizes for display
+                let sizes = ['M'];
+                try {
+                    if (product[5]) {
+                        sizes = JSON.parse(product[5]);
+                    }
+                } catch (e) {
+                    console.error('Error parsing sizes:', e);
+                }
+                
                 const productImage = product[4] ? 
                     `<img src="${product[4]}" alt="${product[1]}" style="width: 60px; height: 60px; object-fit: cover; border-radius: var(--radius);" onerror="this.style.display='none'">` :
                     '<i class="fas fa-box" style="font-size: 2rem; color: var(--gray);"></i>';
@@ -3664,7 +3925,7 @@
                             ${productImage}
                             <div class="admin-product-info">
                                 <h4>${product[1]}</h4>
-                                <span class="product-category-badge">${product[5] || 'Default Size'} | ${product[6] || 'Uncategorized'}</span>
+                                <span class="product-category-badge">Sizes: ${sizes.join(', ')} | ${product[6] || 'Uncategorized'}</span>
                                 <div class="product-price">₹${product[2]}</div>
                                 <div class="product-desc-preview">${(product[3] || 'No description').substring(0, 100)}${(product[3] || '').length > 100 ? '...' : ''}</div>
                             </div>
