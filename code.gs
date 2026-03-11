@@ -75,7 +75,7 @@ function initSheets() {
     "price",
     "description",
     "imageUrl",
-    "size",        // Changed from "quantity" to "size"
+    "sizes",        // Changed from "size" to "sizes" (JSON array of available sizes)
     "category",
     "created_at"
   ]);
@@ -169,13 +169,16 @@ function getProducts() {
 }
 
 function addProduct(data) {
+  // Convert sizes array to JSON string for storage
+  const sizesJson = JSON.stringify(data.sizes || ["M"]);
+  
   getSheet("PRODUCTS").appendRow([
     genId(),
     data.name,
     Number(data.price),
     data.description || "",
     data.imageUrl || "",
-    data.size || "M",    // Changed from quantity to size (default "M")
+    sizesJson,    // Store sizes as JSON string
     data.category || "General",
     new Date().toISOString()
   ]);
@@ -188,12 +191,15 @@ function updateProduct(data) {
 
   for (let i = 1; i < rows.length; i++) {
     if (rows[i][0] === data.id) {
+      // Convert sizes array to JSON string for storage
+      const sizesJson = JSON.stringify(data.sizes || ["M"]);
+      
       sh.getRange(i + 1, 2, 1, 6).setValues([[
         data.name,
         Number(data.price),
         data.description || "",
         data.imageUrl || "",
-        data.size || "M",    // Changed from quantity to size
+        sizesJson,    // Store sizes as JSON string
         data.category || "General"
       ]]);
       return { success: true };
@@ -224,8 +230,8 @@ function checkout(data) {
     productId: item.id,
     name: item.name,
     price: item.price,
-    size: item.size,        // Changed from quantity to size
-    subtotal: item.price    // Removed quantity multiplication since size doesn't affect price
+    size: item.size,
+    subtotal: item.price
   }));
 
   getSheet("ORDERS").appendRow([
@@ -240,8 +246,6 @@ function checkout(data) {
     JSON.stringify(items),
     new Date().toISOString()
   ]);
-
-  // No stock reduction needed since we're using size
 
   return { success: true, orderId };
 }
